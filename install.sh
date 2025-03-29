@@ -166,6 +166,7 @@ cp $SCRIPTPATH/dots/wofi/style.css $USERHOME/.config/wofi/style.css
 #######################################################################
 printf "Setting executable permissions for scripts...\n"
 find $USERHOME/.config/sway -type f -name "*.sh" -exec chmod +x {} +
+chmod $USERHOME/.config/waybar/menu.sh +x
 #######################################################################
 # Enable Firewall (UFW)
 #######################################################################
