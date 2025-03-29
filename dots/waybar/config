@@ -1,0 +1,57 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 4,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "modules-center": ["sway/workspaces", "tray"],
+    "modules-left": ["custom/menu", "memory", "cpu"],
+    "modules-right": ["custom/audio", "network", "bluetooth", "battery", "clock"],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}"
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+    "clock": {
+        "timezone": "Europe/Denmark",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%d-%m-%Y}"
+    },
+    "battery": {
+        "states": {
+        "warning": 30,
+        "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "⚡{capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": "Connected  ",
+        "tooltip-format": "{ifname}: {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "exec nm-applet --indicator"
+    },
+    "custom/audio": {
+        "format": "{}",
+        "signal": 8,
+        "interval": "once",
+        "exec": "~/.config/sway/audio.sh",
+        "on-click": "pavucontrol"
+    },
+    "custom/menu": {
+        "format": "⏻",
+        "on-click": "exec ~/.config/waybar/menu.sh",
+        "tooltip": false
+    }
+}

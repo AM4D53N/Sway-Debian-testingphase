@@ -1,0 +1,183 @@
+/*######################################################################
+#   Installation script for the installation of;                       #
+#   Debian_Sway/.dots/waybar/style.css                                 #
+#                        +---------------+                             #
+#                        | 'Debian-Sway' |                             #
+#                        +---------------+                             #
+#                                                                      #
+#   by: AM4D53N                                                        #
+#                                                                      #
+######################################################################*/
+
+:root {
+    /* Color Palette */
+    --bunting:      #0e103d;
+    --lucky-point:  #131662;
+    --persian-blue: #232ab0;
+    --lemon:        #fbea1e;
+    --turquoise:    #30e9cd;
+    --white:        #ffffff;
+    --red:          #ff5555;
+}
+
+  /* Global Styles */
+  * {
+    border: none;
+    border-radius: 12px; /* Rounded corners */
+    font-family: "FontAwesome", "Iosevka Nerd Font", sans-serif;
+    font-size: 14px;
+    min-height: 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+  /* Overall Waybar styling */
+window#waybar {
+    background-color: var(--bunting); /* Bunting */
+    color: var(--white);              /* White text */
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    height: 32px;                     /* Explicit bar height */
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+  /* Workspaces */
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: var(--white);
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button:hover {
+    background-color: var(--lucky-point);
+    filter: brightness(1.1);
+}
+
+#workspaces button.focused {
+    background-color: var(--lucky-point);
+    color: var(--persian-blue);
+    border-bottom: 3px solid var(--persian-blue);
+}
+
+#workspaces button.urgent {
+    background-color: var(--lemon);
+    color: var(--bunting);
+}
+
+  /* Clock */
+#clock {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--lucky-point);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+  /* Network */
+#network {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--turquoise);
+    color: var(--bunting);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#network.disconnected {
+    background-color: var(--persian-blue);
+    color: var(--white);
+}
+
+  /* PulseAudio */
+#pulseaudio {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--turquoise);
+    color: var(--bunting);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#pulseaudio.muted {
+    background-color: var(--persian-blue);
+    color: var(--white);
+}
+
+  /* Bluetooth */
+#bluetooth {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--turquoise);
+    color: var(--bunting);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#bluetooth.disabled {
+    background-color: var(--persian-blue);
+    color: var(--white);
+}
+
+  /* Battery */
+#battery {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--lemon);
+    color: var(--bunting);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#battery.charging {
+    background-color: var(--persian-blue);
+    color: var(--white);
+}
+
+#battery.critical:not(.charging) {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+  /* Tray */
+#tray {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--lucky-point);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+  /* Focused Window */
+#window {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--lucky-point);
+    color: var(--white);
+    font-weight: bold;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#window:hover {
+    color: var(--persian-blue);
+}
+
+  /* Custom Audio Sink */
+#custom-audio-sink {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--persian-blue);
+    color: var(--white);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+  /* Custom Scratchpad */
+#custom-scratchpad {
+    padding: 0 12px;
+    margin: 0 5px;
+    background-color: var(--turquoise);
+    color: var(--bunting);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+#custom-scratchpad:hover {
+    background-color: var(--persian-blue);
+    color: var(--white);
+}

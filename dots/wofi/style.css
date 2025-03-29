@@ -1,0 +1,83 @@
+/*######################################################################
+#   Installation script for the installation of;                       #
+#   Debian_Sway/.dots/waybar/style.css                                 #
+#                        +---------------+                             #
+#                        | 'Debian-Sway' |                             #
+#                        +---------------+                             #
+#                                                                      #
+#   by: AM4D53N                                                        #
+#                                                                      #
+######################################################################*/
+
+:root {
+	/* Color Palette */
+	--bunting:      #0e103d;
+	--lucky-point:  #131662;
+	--persian-blue: #232ab0;
+	--lemon:        #fbea1e;
+	--turquoise:    #30e9cd;
+	--white:        #ffffff;
+}
+
+  /* Overall Wofi window */
+window {
+	margin: 0px;
+	border: 1px solid var(--lucky-point);
+	background-color: var(--bunting);
+}
+
+  /* Input field styling */
+#input {
+	margin: 5px;
+	border: none;
+	color: var(--white);
+	background-color: var(--lucky-point);
+}
+
+/* Inner and outer container boxes */
+#inner-box,
+#outer-box {
+	margin: 5px;
+	border: none;
+	background-color: var(--persian-blue);
+}
+
+  /* Scrollbar styling */
+#scroll {
+	margin: 0px;
+	border: none;
+}
+
+/* Default text styling */
+#text {
+	margin: 5px;
+	border: none;
+	color: var(--white);
+}
+
+/* For activatable entries, change text color */
+#entry.activatable #text {
+	color: var(--bunting);
+}
+
+/* All elements inside an entry use white text by default */
+#entry > * {
+	color: var(--white);
+}
+
+/* Styling for selected entry */
+#entry:selected {
+	background-color: var(--lemon);
+	transition: background-color 0.2s ease;
+}
+
+/* Make text bold in selected entry */
+#entry:selected #text {
+	font-weight: bold;
+}
+
+/* Optional: Add a hover effect to entries */
+#entry:hover {
+	background-color: var(--turquoise);
+	cursor: pointer;
+}

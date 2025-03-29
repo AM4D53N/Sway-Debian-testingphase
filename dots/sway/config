@@ -1,0 +1,183 @@
+######################################################################
+#   Sway config file for;                                            #
+#   Debian_Sway/.dots/sway/config                                    #
+#                        +---------------+                           #
+#                        | 'Debian-Sway' |                           #
+#                        +---------------+                           #
+#                                                                    #
+#   by: AM4D53N                                                      #
+#                                                                    #
+#   This script was inspired by:                                     #
+#   learnlinux.tv/how-i-set-up-the-sway-window-manager-on-debian-12  #
+#                                                                    #
+######################################################################
+
+# To reload sway, save doc, "Super + Shift + C"
+
+set $term alacritty
+
+######################################################################
+#                              Appearance                            #
+######################################################################
+
+# Declare Colors:
+set $background #332b2b
+set $color_urgent #fb4934
+set $text_color #ffffff
+set $title_bg_unfocused #666666
+set $title_outline_active #0e844e
+set $title_outline_unfocused #332b2b
+
+# Set Colors:
+client.background       $background
+client.focused          $title_outline_active    $background         $text_color   $title_outline_active $title_outline_active
+client.focused_inactive $title_outline_unfocused $background         $text_color   $text_color           $title_outline_unfocused
+client.unfocused        $title_outline_unfocused $title_bg_unfocused $text_color   $title_outline_active
+client.urgent           $color_urgent            $color_urgent       $color_urgent $color_urgent         $color_urgent
+
+# Gaps
+gaps inner 10
+gaps outer 5
+
+# Default border:
+default_border pixel 2
+
+# Set the Wallpaper:
+output * bg $HOME/.config/sway/wallpaper.jpg fill
+
+######################################################################
+#                            Define panel                            #
+######################################################################
+
+bar {
+    swaybar_command waybar
+}
+
+######################################################################
+#                            Key bindings                            #
+######################################################################
+
+# Set mod key (Mod4 = Super/Windows key)
+set $mod Mod4
+
+# Keybindings
+bindsym $mod+Enter exec $term
+bindsym $mod+s exec wofi -show drun
+bindsym $mod+q kill
+bindsym $mod+Shift+r restart
+
+# Reload config file:
+bindsym $mod+Shift+c reload
+
+# Quit session:
+bindsym $mod+Shift+e exec $HOME/.config/sway/exit.sh
+
+# Screen locking:
+set $lock swaylock --clock --indicator --screenshots \
+    --effect-scale 0.4 \
+    --effect-vignette 0.2:0.5 \
+    --effect-blur 8x4 \
+    --datestr "%a %e.%m.%Y" \
+    --timestr "%k:%M"
+
+# Idle lock configuration:
+exec swayidle -w \
+    timeout 600 $lock \
+    timeout 570 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep $lock
+
+# Manual lock binding:
+bindsym $mod+l exec bash ~/.config/sway/lock.sh
+
+
+# Move focus:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Resizing containers:
+mode "resize" {
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    floating_modifier $mod normal
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Workspaces
+set $ws0 "System Administration"
+set $ws1 "1 - Browsing"
+set $ws2 "2 - Media"
+set $ws3 "3 - Writing"
+set $ws4 "4 - Code"
+set $ws5 "5 - Communication"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+bindsym $mod+0 workspace $ws0
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+bindsym $mod+Shift+0 move container to workspace $ws0
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+# Layout adjustments
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+z layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+f floating toggle
+bindsym $mod+tab focus mode_toggle
+bindsym $mod+a focus parent
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Audio keys (using wpctl and light)
+bindsym XF86AudioRaiseVolume exec "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+; pkill -RTMIN+8 waybar"
+bindsym XF86AudioLowerVolume exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; pkill -RTMIN+8 waybar"
+bindsym XF86AudioMute exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; pkill -RTMIN+8 waybar"
+
+bindsym XF86MonBrightnessDown exec "brightnessctl set 10%-"
+bindsym XF86MonBrightnessUp exec "brightnessctl set +10%"
+
+# Application launching
+set $menu wofi --show drun -i | xargs swaymsg exec --
+bindsym $mod+shift+b exec firefox
+bindsym $mod+t exec $term
+bindsym $mod+Shift+q kill
+bindsym $mod+space exec $menu
+
+include /etc/sway/config-vars.d/*
+include /etc/sway/config.d/*
