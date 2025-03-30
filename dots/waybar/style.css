@@ -73,19 +73,6 @@ window#waybar {
     color: #ffffff;
 }
 
-#pulseaudio {
-    padding: 0 12px;
-    margin: 0 5px;
-    background-color: #30e9cd;
-    color: #0e103d;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-}
-
-#pulseaudio.muted {
-    background-color: #232ab0;
-    color: #ffffff;
-}
-
 #bluetooth {
     padding: 0 12px;
     margin: 0 5px;
