@@ -228,7 +228,7 @@ sudo apt autoremove -yqq
 printf "Installation complete! \n"
 printf "Reboot system for all changes to take place.\n"
 rebootfunc(){
-    read -n 1 -r -p "Do you want to reboot now? (to avoid the installation-files self-deleting press [Q] to quit) [y/n/Q] " input
+    read -n 1 -r -p "Do you want to reboot now? (to avoid the installation-files self-deleting press [Q] to quit, then reboot manually when you're ready) [y/n/Q] " input
     if [[ "$input" =~ ^[Yy]$ ]]; then
         printf "Rebooting now...\n"
         printf "The installation files will self-delete in 5 seconds \n"
