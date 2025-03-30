@@ -26,7 +26,7 @@ SCRIPTPATH=$(dirname "$0") # Where did they save me?
 printf "Starting setup...\n"
 
 printf "Updating system...\n"
-if ! (sudo apt update -yqq > /dev/null && sudo apt upgrade -qqy > /dev/null); then
+if ! (sudo apt update -qqy && sudo apt upgrade -qqy); then
     printf "Error: Failed to update system.\n" >&2
     exit 1
 fi
@@ -36,7 +36,7 @@ fi
 printf "Installing packages...\n"
 source $SCRIPTPATH/dots/packages.sh
 for package in "${packages[@]}"; do
-    sudo apt install -yqq "$package" > /dev/null
+    sudo apt install -yqq "$package"
 done
 #######################################################################
 # Add Repository for Grub Theme
@@ -45,7 +45,7 @@ read -n 1 -r -p "Are you planning on dual booting this device? [y/N]" input
 if [[ "$input" =~ ^[Yy]$ ]]; then
     printf "Adding Bootloader theme...\n"
     sudo apt install -yqq grub-customizer > /dev/null    # Bootloader customization tool
-    if ! wget -q -O- https://github.com/shvchk/poly-dark/raw/master/install.sh | bash -s -- --lang English > /dev/null; then
+    if ! wget -q -O- https://github.com/shvchk/poly-dark/raw/master/install.sh | bash -s -- --lang English; then
         printf "Failed to download bootloader theme, continuing without.\n"
     fi
 else
@@ -55,10 +55,10 @@ fi
 # Compile swaylock-effects from Source
 #######################################################################
 printf "Compiling swaylock-effects...\n"
-if ! ( git clone https://github.com/mortie/swaylock-effects.git /tmp/swaylock-effects > /dev/null &&
+if ! ( git clone https://github.com/mortie/swaylock-effects.git /tmp/swaylock-effects &&
         cd /tmp/swaylock-effects &&
-        make > /dev/null &&
-        sudo make install > /dev/null ); then
+        make &&
+        sudo make install ); then
     printf "Error: Failed to compile swaylock-effects.\n" >&2
 else
     rm -rf /tmp/swaylock-effects
@@ -66,59 +66,59 @@ fi
 #######################################################################
 # Install VSCode or VSCodium (User Choice) (if compatible architecture)
 #######################################################################
-ARCH=$(dpkg --print-architecture)
-if [ "$ARCH" = "amd64" ]; then
-    printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more complete IDE...\n"
-    read -n 1 -r -p "Install 'VS Code' from microsoft [A], 'VS Codium' (an open-source alternative) [B], or skip [S]? [a/b/S] \n You can also press 'skip' [S] and download an alternative (IntelliJ, Geany, CodeLite, etc.) later on: " code_input
-    if [[ "$code_input" =~ ^[Aa]$ ]]; then
-        printf "Installing VSCode...\n"
-        sudo apt install -yqq software-properties-common apt-transport-https wget > /dev/null
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-        sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null
-        echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        rm -f packages.microsoft.gpg
-        sudo apt update -yqq > /dev/null
-        sudo apt install -yqq code > /dev/null
-    elif [[ "$code_input" =~ ^[Bb]$ ]]; then
-        printf "Installing VSCodium...\n"
-        sudo apt install -yqq wget gpg > /dev/null
-        wget -qO- https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/install.sh | sudo bash > /dev/null
-        sudo apt update -yqq > /dev/null
-        sudo apt install -yqq codium > /dev/null
-    else
-        printf "Skipping code editor installation.\n"
-    fi
-else
-    printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more complete IDE...\n"
-    read -n 1 -r -p "Do you wish to install 'VS Code' from microsoft? [y/N] \n You can also press 'NO' [N] and download an alternative (IntelliJ, Geany, Code Lite, etc.) later on: " code_input_2
-    if [[ "$code_input_2" =~ ^[Yy]$ ]]; then
-        printf "Installing VSCode...\n"
-        sudo apt install -yqq software-properties-common apt-transport-https wget > /dev/null
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-        sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null
-        echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        rm -f packages.microsoft.gpg
-        sudo apt update -yqq > /dev/null
-        sudo apt install -yqq code > /dev/null
-    else
-        printf "Skipping code editor installation.\n"
-    fi
-fi
-#######################################################################
-# Install Spotify (User Choice)
-#######################################################################
-read -n 1 -r -p "Install Spotify? [y/N] " spotify_input
-echo
-if [[ "$spotify_input" =~ ^[Yy]$ ]]; then
-    printf "Installing Spotify...\n"
-    sudo apt install -yqq curl gpg > /dev/null
-    curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg > /dev/null
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list > /dev/null
-    sudo apt update -yqq > /dev/null
-    sudo apt install -yqq spotify-client > /dev/null
-else
-    printf "Skipping Spotify installation.\n"
-fi
+# ARCH=$(dpkg --print-architecture)
+# if [ "$ARCH" = "amd64" ]; then
+#     printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more complete IDE...\n"
+#     read -n 1 -r -p "Install 'VS Code' from microsoft [A], 'VS Codium' (an open-source alternative) [B], or skip [S]? [a/b/S] \n You can also press 'skip' [S] and download an alternative (IntelliJ, Geany, CodeLite, etc.) later on: " code_input
+#     if [[ "$code_input" =~ ^[Aa]$ ]]; then
+#         printf "Installing VSCode...\n"
+#         sudo apt install -yqq software-properties-common apt-transport-https wget > /dev/null
+#         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+#         sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null
+#         echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+#         rm -f packages.microsoft.gpg
+#         sudo apt update -yqq > /dev/null
+#         sudo apt install -yqq code > /dev/null
+#     elif [[ "$code_input" =~ ^[Bb]$ ]]; then
+#         printf "Installing VSCodium...\n"
+#         sudo apt install -yqq wget gpg > /dev/null
+#         wget -qO- https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/install.sh | sudo bash > /dev/null
+#         sudo apt update -yqq > /dev/null
+#         sudo apt install -yqq codium > /dev/null
+#     else
+#         printf "Skipping code editor installation.\n"
+#     fi
+# else
+#     printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more complete IDE...\n"
+#     read -n 1 -r -p "Do you wish to install 'VS Code' from microsoft? [y/N] \n You can also press 'NO' [N] and download an alternative (IntelliJ, Geany, Code Lite, etc.) later on: " code_input_2
+#     if [[ "$code_input_2" =~ ^[Yy]$ ]]; then
+#         printf "Installing VSCode...\n"
+#         sudo apt install -yqq software-properties-common apt-transport-https wget > /dev/null
+#         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+#         sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/ > /dev/null
+#         echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+#         rm -f packages.microsoft.gpg
+#         sudo apt update -yqq > /dev/null
+#         sudo apt install -yqq code > /dev/null
+#     else
+#         printf "Skipping code editor installation.\n"
+#     fi
+# fi
+# #######################################################################
+# # Install Spotify (User Choice)
+# #######################################################################
+# read -n 1 -r -p "Install Spotify? [y/N] " spotify_input
+# echo
+# if [[ "$spotify_input" =~ ^[Yy]$ ]]; then
+#     printf "Installing Spotify...\n"
+#     sudo apt install -yqq curl gpg > /dev/null
+#     curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg > /dev/null
+#     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list > /dev/null
+#     sudo apt update -yqq > /dev/null
+#     sudo apt install -yqq spotify-client > /dev/null
+# else
+#     printf "Skipping Spotify installation.\n"
+# fi
 #######################################################################
 # Create Necessary Configuration Directories
 #######################################################################
@@ -128,9 +128,11 @@ mkdir -p $HOME/.config/{sway,waybar,alacritty,wofi}
 # Configure shell Prompt
 #######################################################################
 printf "Configuring shell prompt...\n"
-if curl -sS https://starship.rs/install.sh | sh > /dev/null; then
-    if command -v starship >/dev/null; then
-        starship preset tokyo-night -o $HOME/.config/starship.toml > /dev/null
+if curl -sS https://starship.rs/install.sh | sh; then
+    if command -v starship > /dev/null; then
+        # Download the Tokyo Night preset and save it to the Starship configuration file
+        curl -sS https://starship.rs/presets/toml/tokyo-night.toml -o $HOME/.config/starship.toml
+        printf "Starship prompt configured with the Tokyo Night preset.\n"
     else
         printf "Error: Starship installation failed.\n" >&2
     fi
@@ -177,7 +179,7 @@ cp $SCRIPTPATH/dots/wofi/style.css $HOME/.config/wofi/style.css
 # Set Executable Permissions for Scripts
 #######################################################################
 printf "Setting executable permissions for scripts...\n"
-find $HOME/.config/sway -type f -name "*.sh" -exec chmod +x {} + > /dev/null
+find $HOME/.config/sway -type f -name "*.sh" -exec chmod +x {} +
 chmod +x $HOME/.config/waybar/menu.sh
 #######################################################################
 # Enable Firewall (UFW)
@@ -186,22 +188,22 @@ printf "Configuring firewall...\n"
 
 # Check if UFW is installed
 if ! command -v ufw &> /dev/null; then
-    sudo apt install -yqq ufw > /dev/null
+    sudo apt install -yqq ufw
 fi
 
 # Set explicit default policies
-sudo ufw default deny incoming > /dev/null
-sudo ufw default allow outgoing > /dev/null
+sudo ufw default deny incoming 
+sudo ufw default allow outgoing
 
 # Check for active SSH connection
 if [ -n "$SSH_CLIENT" ]; then
     printf "Allowing incoming SSH connections since the script is run via SSH.\n"
-    sudo ufw limit ssh comment 'Rate limit SSH to prevent brute-force attacks' > /dev/null
+    sudo ufw limit ssh comment 'Rate limit SSH to prevent brute-force attacks'
 else
     printf "You do not seem to be connecting to this device via SSH.\n"
-    read -p "Do you want to allow incoming SSH connections? (y/N): " allow_ssh
+    read -p "Do you want to allow incoming SSH connections? [y/N]: " allow_ssh
     if [[ $allow_ssh =~ ^[Yy]$ ]]; then
-        sudo ufw limit ssh comment 'Rate limit SSH to prevent brute-force attacks' > /dev/null
+        sudo ufw limit ssh comment 'Rate limit SSH to prevent brute-force attacks'
         printf "SSH allowed with rate limiting.\n"
     else
         printf "Incoming SSH blocked in firewall.\n"
@@ -209,10 +211,10 @@ else
 fi
 
 # Enable logging
-sudo ufw logging on > /dev/null
+sudo ufw logging on
 
 # Enable firewall without prompting
-sudo ufw --force enable > /dev/null
+sudo ufw --force enable
 
 # Provide status and guidance
 printf "Firewall enabled with defaults: incoming blocked (except allowed services), outgoing allowed.\n"
@@ -222,7 +224,7 @@ printf "For example, to allow Samba for file sharing, use 'sudo ufw allow samba'
 #######################################################################
 # Final Reboot Prompt
 #######################################################################
-sudo apt autoremove -yqq > /dev/null
+sudo apt autoremove -yqq 
 printf "Installation complete! \n"
 printf "Reboot system for all changes to take place.\n"
 rebootfunc(){
