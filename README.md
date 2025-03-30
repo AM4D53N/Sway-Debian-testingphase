@@ -1,3 +1,4 @@
+# Work in progress, do not run install
 # Sway-Debian
 
 Sway-Debian is a lightweight and customizable Debian-based environment featuring the Sway window manager. This setup is designed to provide a modern, efficient, and visually appealing desktop experience tailored for Wayland.
