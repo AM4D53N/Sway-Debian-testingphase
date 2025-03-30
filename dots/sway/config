@@ -1,6 +1,5 @@
 ######################################################################
 #   Sway config file for;                                            #
-#   Debian_Sway/.dots/sway/config                                    #
 #                        +---------------+                           #
 #                        | 'Debian-Sway' |                           #
 #                        +---------------+                           #
@@ -9,8 +8,10 @@
 #                                                                    #
 #   This script was inspired by:                                     #
 #   learnlinux.tv/how-i-set-up-the-sway-window-manager-on-debian-12  #
-#                                                                    #
 ######################################################################
+
+include /etc/sway/config-vars.d/*
+include /etc/sway/config.d/*
 
 # To reload sway, save doc, "Super + Shift + C"
 
@@ -61,8 +62,6 @@ bar {
 set $mod Mod4
 
 # Keybindings
-bindsym $mod+Enter exec $term
-bindsym $mod+s exec wofi -show drun
 bindsym $mod+q kill
 bindsym $mod+Shift+r restart
 
@@ -87,10 +86,6 @@ exec swayidle -w \
     resume 'swaymsg "output * dpms on"' \
     before-sleep $lock
 
-# Manual lock binding:
-bindsym $mod+l exec bash ~/.config/sway/lock.sh
-
-
 # Move focus:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -109,7 +104,6 @@ mode "resize" {
     bindsym Down resize grow height 10px
     bindsym Up resize shrink height 10px
     bindsym Right resize grow width 10px
-    floating_modifier $mod normal
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
@@ -175,9 +169,7 @@ bindsym XF86MonBrightnessUp exec "brightnessctl set +10%"
 # Application launching
 set $menu wofi --show drun -i | xargs swaymsg exec --
 bindsym $mod+shift+b exec firefox
-bindsym $mod+t exec $term
+bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
-bindsym $mod+space exec $menu
-
-include /etc/sway/config-vars.d/*
-include /etc/sway/config.d/*
+bindsym $mod+s exec $menu
+bindsym $mod+l exec bash ~/.config/sway/lock.sh # Manual lock binding
