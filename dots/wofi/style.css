@@ -5,68 +5,56 @@
 #                        +---------------+                             #
 #                                                                      #
 #   by: AM4D53N                                                        #
-#                                                                      #
 ######################################################################*/
 
-/* Overall Wofi window */
 window {
 	margin: 0px;
-	border: 1px solid #131662; /* --lucky-point */
-	background-color: #0e103d; /* --bunting */
+	border: 1px solid #131662;
+	background-color: #0e103d;
 }
 
-/* Input field styling */
 #input {
 	margin: 5px;
 	border: none;
-	color: #ffffff; /* --white */
-	background-color: #131662; /* --lucky-point */
+	color: #ffffff;
+	background-color: #131662;
 }
 
-/* Inner and outer container boxes */
 #inner-box,
 #outer-box {
 	margin: 5px;
 	border: none;
-	background-color: #232ab0; /* --persian-blue */
+	background-color: #232ab0;
 }
 
-/* Scrollbar styling */
 #scroll {
 	margin: 0px;
 	border: none;
 }
 
-/* Default text styling */
 #text {
 	margin: 5px;
 	border: none;
-	color: #ffffff; /* --white */
-}
+	color: #ffffff;
 
-/* For activatable entries, change text color */
 #entry.activatable #text {
-	color: #0e103d; /* --bunting */
+	color: #0e103d;
 }
 
-/* All elements inside an entry use white text by default */
 #entry > * {
-	color: #ffffff; /* --white */
+	color: #ffffff;
 }
 
-/* Styling for selected entry */
 #entry:selected {
-	background-color: #fbea1e; /* --lemon */
+	background-color: #fbea1e;
 	transition: background-color 0.2s ease;
 }
 
-/* Make text bold in selected entry */
 #entry:selected #text {
 	font-weight: bold;
 }
 
-/* Optional: Add a hover effect to entries */
 #entry:hover {
-	background-color: #30e9cd; /* --turquoise */
+	background-color: #30e9cd;
 	cursor: pointer;
 }
