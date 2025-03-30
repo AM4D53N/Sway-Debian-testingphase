@@ -61,7 +61,9 @@ packages=(
 ######################################################################
 "network-manager-gnome"  # | Network management services. provides the network menu components, includes nm-applet (Tray applet)
 "bluez"                  # | Bluetooth management tool
+"bluez-tools"            # | Set of tools to manage Bluetooth devices.
 "blueman"                # | GUI for 'BlueZ'
+"libspa-0.2-bluetooth"   # | Bluetooth support for Pipewire.
 
 ######################################################################
 #                           System Utilities                         #
@@ -74,6 +76,9 @@ packages=(
 "guvcview"               # | GUI for webcam viewing and control
 "htop"                   # | Process viewer
 "tldr"                   # | Simplified man pages for quick help
+"curl"                   # | Command line tool and library for transferring data with URLs
+"wget"                   # | Network downloader
+"cmake"                  # | Build system generator
 
 ######################################################################
 #                 Aesthetic and Interface Enhancements               #
