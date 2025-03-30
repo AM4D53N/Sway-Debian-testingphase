@@ -14,12 +14,12 @@
 SCRIPTPATH=$(dirname "$0") # Where did they save me?
 
 #######################################################################
-# Check for root privileges
+# Check for root privileges, lets see if nesecary, dont want more /root/ issues.
 #######################################################################
-if [[ $EUID -ne 0 ]]; then
-    printf "This script must be run with sudo, please enter your password.\n" >&2 
-    exec sudo bash "$0" "$@"
-fi
+#if [[ $EUID -ne 0 ]]; then
+#    printf "This script must be run with sudo, please enter your password.\n" >&2 
+#    exec sudo bash "$0" "$@"
+#fi
 #######################################################################
 # Update System
 #######################################################################
