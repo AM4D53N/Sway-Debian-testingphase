@@ -7,29 +7,26 @@
 #   by: AM4D53N                                                        #
 ######################################################################*/
 
-/* Global Styles */
 * {
     border: none;
-    border-radius: 12px; /* Rounded corners */
+    border-radius: 12px;
     font-family: "FontAwesome", "Iosevka Nerd Font", sans-serif;
     font-size: 14px;
     min-height: 0;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Overall Waybar styling */
 window#waybar {
-    background-color: #0e103d; /* Bunting */
-    color: #ffffff;              /* White text */
+    background-color: #0e103d;
+    color: #ffffff;
     transition-property: background-color;
     transition-duration: 0.5s;
-    height: 32px;                     /* Explicit bar height */
+    height: 32px;
     display: flex;
     align-items: center;
     padding: 0 10px;
 }
 
-/* Workspaces */
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
@@ -53,7 +50,6 @@ window#waybar {
     color: #0e103d;
 }
 
-/* Clock */
 #clock {
     padding: 0 12px;
     margin: 0 5px;
@@ -64,7 +60,6 @@ window#waybar {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Network */
 #network {
     padding: 0 12px;
     margin: 0 5px;
@@ -78,7 +73,6 @@ window#waybar {
     color: #ffffff;
 }
 
-/* PulseAudio */
 #pulseaudio {
     padding: 0 12px;
     margin: 0 5px;
@@ -92,7 +86,6 @@ window#waybar {
     color: #ffffff;
 }
 
-/* Bluetooth */
 #bluetooth {
     padding: 0 12px;
     margin: 0 5px;
@@ -106,7 +99,6 @@ window#waybar {
     color: #ffffff;
 }
 
-/* Battery */
 #battery {
     padding: 0 12px;
     margin: 0 5px;
@@ -125,7 +117,6 @@ window#waybar {
     color: #ffffff;
 }
 
-/* Tray */
 #tray {
     padding: 0 12px;
     margin: 0 5px;
@@ -133,7 +124,6 @@ window#waybar {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Focused Window */
 #window {
     padding: 0 12px;
     margin: 0 5px;
@@ -147,8 +137,7 @@ window#waybar {
     color: #232ab0;
 }
 
-/* Custom Audio Sink */
-#custom-audio-sink {
+#custom/audio {
     padding: 0 12px;
     margin: 0 5px;
     background-color: #232ab0;
@@ -156,16 +145,15 @@ window#waybar {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Custom Scratchpad */
-#custom-scratchpad {
+#custom/menu {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #30e9cd;
-    color: #0e103d;
+    background-color: #131662;
+    color: #ffffff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-#custom-scratchpad:hover {
+#custom/menu:hover {
     background-color: #232ab0;
     color: #ffffff;
 }
