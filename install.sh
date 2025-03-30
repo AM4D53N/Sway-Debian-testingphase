@@ -11,9 +11,7 @@
 #######################################################################
 # Defining script constants
 #######################################################################
-SCRIPTPATH=$(realpath "$0") # Where did they save me?
-USERID=$(whoami) # Who are you?
-USERHOME=$(grep "^$USERID:" /etc/passwd | cut -d: -f6) # Where do you live? (Just to be sure that sudo doesn't make script think your home is /root/)
+SCRIPTPATH=$(dirpath "$0") # Where did they save me?
 
 #######################################################################
 # Check for root privileges
@@ -43,7 +41,7 @@ done
 #######################################################################
 # Add Repository for Grub Theme
 #######################################################################
-read -n 1 -r -p "Are you planning on dual booting this device? (Y/n)" input
+read -n 1 -r -p "Are you planning on dual booting this device? [y/N]" input
 if [[ "$input" =~ ^[Yy]$ ]]; then
     printf "Adding Bootloader theme...\n"
     sudo apt install -yqq grub-customizer     # Bootloader customization tool
@@ -70,19 +68,18 @@ fi
 #######################################################################
 ARCH=$(dpkg --print-architecture)
 if [ "$ARCH" = "amd64" ]; then
-    read -n 1 -r -p "Install VSCode (Y), VSCodium (N), or skip (S)? (Y/n/s) " code_input
-    if [[ "$code_input" =~ ^[Yy]$ ]]; then
-        # Install VSCode using the official Microsoft repository
+    printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more comprehensive IDE (Integrated Development Enviroment)"
+    read -n 1 -r -p "Install 'VS Code' from microsoft [A], 'VS Codium' (an open-source alterntive) [B], or skip [S]? [a/b/S] \n You can also press 'skip' [S] and download an alternative (IntelliJ, Geany, Code Lite, etc.) later on." code_input
+    if [[ "$code_input" =~ ^[Aa]$ ]]; then
         printf "Installing VSCode...\n"
         sudo apt install -yqq software-properties-common apt-transport-https wget
         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-        sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-        rm packages.microsoft.gpg
-        echo "deb [arch=amd64] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+        sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+        echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        rm -f packages.microsoft.gpg
         sudo apt update -yqq
         sudo apt install -yqq code
-    elif [[ "$code_input" =~ ^[Nn]$ ]]; then
-        # Install VSCodium using its official repository install script
+    elif [[ "$code_input" =~ ^[Bb]$ ]]; then
         printf "Installing VSCodium...\n"
         sudo apt install -yqq wget gpg
         wget -qO- https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/install.sh | sudo bash
@@ -91,17 +88,32 @@ if [ "$ARCH" = "amd64" ]; then
     else
         printf "Skipping code editor installation.\n"
     fi
+else
+    printf "Micro is already installed on the system which can be used to write and edit code, but if you plan on larger programming tasks than editing the odd config file, you probably want a more comprehensive IDE (Integrated Development Enviroment)"
+    read -n 1 -r -p "Do you wish to install 'VS Code' from microsoft? [y/N] \n You can also press 'NO' [N] and download an alternative (IntelliJ, Geany, Code Lite, etc.) later on" code_input_2
+    if [[ "$code_input_2" =~ ^[Yy]$ ]]; then
+        printf "Installing VSCode...\n"
+        sudo apt install -yqq software-properties-common apt-transport-https wget
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+        sudo install -qq -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+        echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        rm -f packages.microsoft.gpg
+        sudo apt update -yqq
+        sudo apt install -yqq code
+    else
+        printf "Skipping code editor installation.\n"
+    fi
 fi
 #######################################################################
 # Install Spotify (User Choice)
 #######################################################################
-read -n 1 -r -p "Install Spotify? (Y/n) " spotify_input
+read -n 1 -r -p "Install Spotify? [y/N] " spotify_input
 echo
 if [[ "$spotify_input" =~ ^[Yy]$ ]]; then
     printf "Installing Spotify...\n"
     sudo apt install -yqq curl gpg
-    curl -sS https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor -o /usr/share/keyrings/spotify-archive-keyring.gpg
+    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
     sudo apt update -yqq
     sudo apt install -yqq spotify-client
 else
@@ -111,14 +123,14 @@ fi
 # Create Necessary Configuration Directories
 #######################################################################
 printf "Creating configuration directories...\n"
-mkdir -p $USERHOME/.config/{sway,waybar,alacritty,wofi}
+mkdir -p $HOME/.config/{sway,waybar,alacritty,wofi}
 #######################################################################
 # Configure shell Prompt
 #######################################################################
 printf "Configuring shell prompt...\n"
 if curl -sS https://starship.rs/install.sh | sh; then
     if command -v starship >/dev/null; then
-        starship preset tokyo-night -o $USERHOME/.config/starship.toml
+        starship preset tokyo-night -o $HOME/.config/starship.toml
     else
         printf "Error: Starship installation failed.\n" >&2
     fi
@@ -130,7 +142,7 @@ fi
 #######################################################################
 printf "Downloading wallpaper...\n"
 WALLPAPER_URL="https://images.wallpapersden.com/image/download/sunset-scenery-minimal_am1uZmiUmZqaraWkpJRmbmdlrWZlbWU.jpg"
-WALLPAPER_PATH="$USERHOME/.config/sway/wallpaper.jpg"
+WALLPAPER_PATH="$HOME/.config/sway/wallpaper.jpg"
 
 if ! curl -L "$WALLPAPER_URL" -o "$WALLPAPER_PATH"; then
     printf "Error: Failed to download wallpaper.\n" >&2
@@ -139,34 +151,34 @@ fi
 # Configure Sway
 #######################################################################
 printf "Configuring Window Manager...\n"
-cp $SCRIPTPATH/dots/sway/config $USERHOME/.config/sway/config
-cp $SCRIPTPATH/dots/sway/audio.sh $USERHOME/.config/sway/audio.sh
-cp $SCRIPTPATH/dots/sway/exit.sh $USERHOME/.config/sway/exit.sh
-cp $SCRIPTPATH/dots/sway/lock.sh $USERHOME/.config/sway/lock_screen.sh
+cp $SCRIPTPATH/dots/sway/config $HOME/.config/sway/config
+cp $SCRIPTPATH/dots/sway/audio.sh $HOME/.config/sway/audio.sh
+cp $SCRIPTPATH/dots/sway/exit.sh $HOME/.config/sway/exit.sh
+cp $SCRIPTPATH/dots/sway/lock.sh $HOME/.config/sway/lock_screen.sh
 #######################################################################
 # Configure Waybar
 #######################################################################
 printf "Configuring taskbar...\n"
-cp $SCRIPTPATH/dots/waybar/config $USERHOME/.config/waybar/config
-cp $SCRIPTPATH/dots/waybar/style.css $USERHOME/.config/waybar/style.css
-cp $SCRIPTPATH/dots/waybar/menu.sh $USERHOME/.config/waybar/menu.sh
+cp $SCRIPTPATH/dots/waybar/config $HOME/.config/waybar/config
+cp $SCRIPTPATH/dots/waybar/style.css $HOME/.config/waybar/style.css
+cp $SCRIPTPATH/dots/waybar/menu.sh $HOME/.config/waybar/menu.sh
 #######################################################################
 # Configure Alacritty
 #######################################################################
 printf "Configuring terminal...\n"
-cp $SCRIPTPATH/dots/alacritty/alacritty.toml $USERHOME/.config/alacritty/alacritty.toml
+cp $SCRIPTPATH/dots/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 #######################################################################
 # Configure Wofi
 #######################################################################
 printf "Configuring application launcher...\n"
-cp $SCRIPTPATH/dots/wofi/config $USERHOME/.config/wofi/config
-cp $SCRIPTPATH/dots/wofi/style.css $USERHOME/.config/wofi/style.css
+cp $SCRIPTPATH/dots/wofi/config $HOME/.config/wofi/config
+cp $SCRIPTPATH/dots/wofi/style.css $HOME/.config/wofi/style.css
 #######################################################################
 # Set Executable Permissions for Scripts
 #######################################################################
 printf "Setting executable permissions for scripts...\n"
-find $USERHOME/.config/sway -type f -name "*.sh" -exec chmod +x {} +
-chmod $USERHOME/.config/waybar/menu.sh +x
+find $HOME/.config/sway -type f -name "*.sh" -exec chmod +x {} +
+chmod +x $HOME/.config/waybar/menu.sh
 #######################################################################
 # Enable Firewall (UFW)
 #######################################################################
@@ -214,7 +226,7 @@ sudo apt autoremove -yqq
 printf "Installation complete! \n"
 printf "Reboot system for all changes to take place.\n"
 rebootfunc(){
-    read -n 1 -r -p "Do you want to reboot now? (Y/n) " input
+    read -n 1 -r -p "Do you want to reboot now? (to avoid the installation-files self-deleting press [Q] to quit) [y/n/Q] " input
     if [[ "$input" =~ ^[Yy]$ ]]; then
         printf "Rebooting now...\n"
         printf "The installation files will self-delete in 5 seconds \n"
@@ -222,7 +234,7 @@ rebootfunc(){
         clear && printf "3.." && sleep 1
         clear && printf "2.." && sleep 1
         clear && printf "1.." && sleep 1
-        cd $USERHOME # Move to safety to ensure user is not in dir while it's deleted
+        cd $HOME # Move to safety to ensure user is not in dir while it's deleted
         sudo rm -fr $SCRIPTPATH && sudo reboot
     elif [[ "$input" =~ ^[Nn]$ ]]; then
         printf "Reboot aborted. Some changes won't take place until system is rebooted\n"
@@ -231,7 +243,7 @@ rebootfunc(){
         clear && printf "3.." && sleep 1
         clear && printf "2.." && sleep 1
         clear && printf "1.." && sleep 1
-        cd $USERHOME # Move to safety to ensure user is not in dir while it's deleted
+        cd $HOME # Move to safety to ensure user is not in dir while it's deleted
         sudo rm -fr $SCRIPTPATH
     elif [[ "$input" =~ ^[Qq]$ ]]; then
         exit 0
