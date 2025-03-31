@@ -182,6 +182,31 @@ printf "Setting executable permissions for scripts...\n"
 find $HOME/.config/sway -type f -name "*.sh" -exec chmod +x {} +
 chmod +x $HOME/.config/waybar/menu.sh
 #######################################################################
+# Automate Sway Startup on TTY1
+#######################################################################
+printf "Configuring Sway to start automatically on TTY1...\n"
+
+# Define the configuration to add
+SWAY_STARTUP_CONFIG='
+# Start Sway automatically on TTY1
+if [[ -z $DISPLAY ]] && [[ $(tty) == /dev/tty1 ]]; then
+    exec sway
+fi
+'
+
+# Check if the configuration already exists in ~/.bash_profile or ~/.bashrc
+if ! grep -q "exec sway" "$HOME/.bash_profile" 2>/dev/null && ! grep -q "exec sway" "$HOME/.bashrc" 2>/dev/null; then
+    # Append the configuration to ~/.bash_profile (or create it if it doesn't exist)
+    if [ -f "$HOME/.bash_profile" ]; then
+        echo "$SWAY_STARTUP_CONFIG" >> "$HOME/.bash_profile"
+    else
+        echo "$SWAY_STARTUP_CONFIG" >> "$HOME/.bashrc"
+    fi
+    printf "Sway startup configuration added to your shell profile.\n"
+else
+    printf "Sway startup configuration already exists. Skipping...\n"
+fi
+#######################################################################
 # Enable Firewall (UFW)
 #######################################################################
 printf "Configuring firewall...\n"

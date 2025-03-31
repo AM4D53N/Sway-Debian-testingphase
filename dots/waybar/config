@@ -13,6 +13,14 @@
         "all-outputs": false,
         "format": "{name}"
     },
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 5
+    },
+    "memory": {
+        "format": "󰍛 {used:0.1f}G/{total:0.1f}G",
+        "interval": 5
+    },
     "tray": {
         "icon-size": 18,
         "spacing": 10
@@ -42,14 +50,14 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "exec nm-applet --indicator"
     },
-    "custom/audio": {
+    "custom-audio": {
         "format": "{}",
         "signal": 8,
         "interval": "once",
         "exec": "~/.config/sway/audio.sh",
         "on-click": "pavucontrol"
     },
-    "custom/menu": {
+    "custom-menu": {
         "format": "⏻",
         "on-click": "exec ~/.config/waybar/menu.sh",
         "tooltip": false

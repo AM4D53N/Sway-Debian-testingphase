@@ -6,8 +6,6 @@
 #                        | 'Debian-Sway' |                           #
 #                        +---------------+                           #
 #                                                                    #
-#   by: AM4D53N                                                      #
-#                                                                    #
 #   This script was taken from:                                      #
 #   learnlinux.tv/how-i-set-up-the-sway-window-manager-on-debian-12  #
 #                                                                    #

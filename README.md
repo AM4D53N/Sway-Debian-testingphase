@@ -125,8 +125,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - **Author**: AM4D53N
 - **Special Thanks**:
-  - [Roboron3042](https://github.com/Roboron3042) for the Cyberpunk-Neon Alacritty theme.
-  - [LearnLinux.tv](https://learnlinux.tv) for inspiration and guidance on setting up Sway on Debian.
-  - [Krister.ee](https://code.krister.ee) for the lock screen script.
-  - The open-source community for providing the tools and inspiration for this project.
+    - The open-source community for providing the tools and inspiration for this project.
+        - [Roboron3042](https://github.com/Roboron3042) - Cyberpunk-Neon Alacritty theme.
+        - [LearnLinux.tv](https://learnlinux.tv) - Sway scripts
+        - [Krister.ee](https://code.krister.ee) - lock screen script.
+        - [antl-d](https://github.com/antl-d/sway-dotfiles) - bits of waybar style
 

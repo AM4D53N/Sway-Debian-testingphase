@@ -7,8 +7,6 @@
 #                        | 'Debian-Sway' |                           #
 #                        +---------------+                           #
 #                                                                    #
-#   by: AM4D53N                                                      #
-#                                                                    #
 #   This script was taken from:                                      #
 #   https://code.krister.ee/lock-screen-in-sway/                     #
 #                                                                    #
