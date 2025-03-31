@@ -6,8 +6,8 @@
     "margin-top": 0,
     "margin-bottom": 0,
     "modules-center": ["sway/workspaces", "tray"],
-    "modules-left": ["custom/menu", "memory", "cpu"],
-    "modules-right": ["custom/audio", "network", "bluetooth", "battery", "clock"],
+    "modules-left": ["custom-menu", "memory", "cpu"],
+    "modules-right": ["custom-audio", "network", "bluetooth", "battery", "clock"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
