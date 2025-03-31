@@ -214,7 +214,7 @@ cp $SCRIPTPATH/dots/waybar/menu.sh $HOME/.config/waybar/menu.sh
 # Configure Alacritty
 #######################################################################
 printf "Configuring terminal...\n"
-cp $SCRIPTPATH/dots/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
+cp $SCRIPTPATH/dots/alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 #######################################################################
 # Configure Wofi
 #######################################################################
@@ -274,7 +274,8 @@ alias grep="grep --color=auto"
 alias nano="micro"
 alias py="python3"
 alias pip="pip3"
-alias apt="nala"
+alias apt="sudo nala"
+alias nala="sudo nala"
 EOF
 fi # if .bash_aliases exists, do nothing, since the user might have their own aliases
 #######################################################################
