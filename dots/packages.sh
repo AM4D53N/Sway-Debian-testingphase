@@ -15,6 +15,9 @@ packages=(
 "swayimg"                # | Handles image displays
 # "swaylock-effects"     # | Compiled from source in install.sh. Screen locker + Enhanced effects for the lock screen
 "swayidle"               # | Inactivity daemon for auto-locking
+"wayland"                # | Wayland display server protocol
+"wayland-protocols"      # | Wayland protocol extensions
+"xwayland"               # | Compatibility layer to run X11 applications on Wayland
 
 ######################################################################
 #                      Status Bar and Launcher                       #
@@ -79,14 +82,18 @@ packages=(
 "curl"                   # | Command line tool and library for transferring data with URLs
 "wget"                   # | Network downloader
 "cmake"                  # | Build system generator
+"meson"                  # | Build system for modern software
+"libxkbcommon-dev"       # | Development files for libxkbcommon (keyboard handling library)
+"libcairo2-dev"          # | Development files for Cairo graphics library
+"libgdk-pixbuf2.0-dev"   # | Development files for GDK Pixbuf (image loading library)
+"libpam0g-dev"           # | Development files for PAM (Pluggable Authentication Modules)
+"scdoc"                  # | Tool for generating man pages
 
 ######################################################################
 #                 Aesthetic and Interface Enhancements               #
 ######################################################################
 "fonts-font-awesome"     # | Icon fonts for GUI apps (e.g. Waybar, Wofi)
-"fonts-iosevka"          # | Font
 "papirus-icon-theme"     # | Icon theme
-"ibus"                   # | Input method framework (for multilingual support)
 # "grub-customizer"      # | Installation confirmed by user prompt in install.sh. Tool for customizing GRUB (nice to have for dual boot)
 "nala"                   # | Modern and user-friendly apt frontend
 )
