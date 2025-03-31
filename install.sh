@@ -36,7 +36,11 @@ fi
 printf "Installing packages...\n"
 source $SCRIPTPATH/dots/packages.sh
 for package in "${packages[@]}"; do
-    sudo apt install -yqq "$package"
+    if sudo apt install -yqq "$package"; then
+        printf "Installing: $package \n"
+    else
+        printf "Failed to install: $package\n" >&2
+    fi
 done
 #######################################################################
 # Add Repository for Grub Theme
