@@ -31,7 +31,7 @@ window#waybar {
  **********************************************************************/
 #workspaces button {
     padding: 0 5px;
-    background-color: #2b3f53bb ;
+    background-color: #2b3f53;
     color: #63faff;
     border-bottom: 3px solid transparent;
 }
@@ -42,13 +42,13 @@ window#waybar {
 }
 
 #workspaces button.focused {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     border-bottom: 3px solid #ffbb00;
 }
 
 #workspaces button.urgent {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
 }
 
@@ -58,7 +58,7 @@ window#waybar {
 #clock {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     font-size: 16px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
@@ -70,13 +70,13 @@ window#waybar {
 #network {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 #network.disconnected {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #ff0000;
 }
 
@@ -86,13 +86,13 @@ window#waybar {
 #bluetooth {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #0000ff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 #bluetooth.disabled {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #454c53;
 }
 
@@ -102,18 +102,18 @@ window#waybar {
 #battery {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 #battery.charging {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #00FF00;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #FF0000;
 }
 
@@ -123,7 +123,7 @@ window#waybar {
 #window {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     font-weight: bold;
@@ -139,13 +139,13 @@ window#waybar {
 #custom-audio {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 #custom-audio:hover {
-    background-color: #404a55bb;
+    background-color: #404a55;
 }
 
 /**********************************************************************
@@ -154,13 +154,13 @@ window#waybar {
 #custom-menu {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 #custom-menu:hover {
-    background-color: #404a55bb;
+    background-color: #404a55;
 }
 
 /**********************************************************************
@@ -169,7 +169,7 @@ window#waybar {
 #memory {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb; 
+    background-color: #2b3f53; 
     color: #63faff; 
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
@@ -180,7 +180,7 @@ window#waybar {
 #cpu {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb;
+    background-color: #2b3f53;
     color: #63faff; 
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
@@ -191,7 +191,7 @@ window#waybar {
 #tray {
     padding: 0 12px;
     margin: 0 5px;
-    background-color: #2b3f53bb; 
+    background-color: #2b3f53; 
     color: #63faff; 
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }

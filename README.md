@@ -37,13 +37,8 @@ Sway-Debian is a lightweight and customizable Debian-based environment featuring
 
 2. Follow the prompts during installation to configure optional components like:
    - Bootloader theme (for dual-boot setups).
-   - VSCode or VSCodium.
-   - Spotify.
-
-3. Reboot the system after installation to apply all changes:
-   ```bash
-   sudo reboot
-   ```
+   - VSCode ** or VSCodium. **
+   - Spotify. **
 
 ---
 

@@ -175,6 +175,15 @@ if curl -sS https://starship.rs/install.sh | sh; then
 else
     printf "Error: Failed to download Starship.\n" >&2
 fi
+# Enable Starship in Bash
+if command -v starship > /dev/null; then
+    if ! grep -q 'eval "$(starship init bash)"' "$HOME/.bashrc"; then
+        echo 'eval "$(starship init bash)"' >> "$HOME/.bashrc"
+        printf "Starship prompt enabled for Bash.\n"
+    else
+        printf "Starship prompt is already enabled for Bash.\n"
+    fi
+fi
 #######################################################################
 # Set Wallpaper for Sway
 #######################################################################
@@ -262,10 +271,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias ~="cd ~"
 alias grep="grep --color=auto"
-alias micro="micro --theme=Dracula"
-alias nano="micro --theme=Dracula"
+alias nano="micro"
 alias py="python3"
 alias pip="pip3"
+alias apt="nala"
 EOF
 fi # if .bash_aliases exists, do nothing, since the user might have their own aliases
 #######################################################################
